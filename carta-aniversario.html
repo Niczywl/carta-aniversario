@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Envelope Aniversário Suave</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #fffaf0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      gap: 20px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .envelope-container {
+      position: relative;
+      width: 90vw;
+      max-width: 400px;
+    }
+
+    .letter {
+      position: absolute;
+      width: 95%;
+      max-width: 380px;
+      height: 180px;
+      left: 50%;
+      bottom: 0;
+      background: white;
+      padding: 25px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      box-sizing: border-box;
+      font-size: 1.3em;
+      color: #333;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      opacity: 0;
+      transform: translate(-50%, 0);
+      transition: transform 2.5s ease, opacity 2s ease; /* MAIS LENTO */
+      z-index: 3;
+      pointer-events: none;
+      overflow-y: auto;
+      text-align: center;
+    }
+
+    .letter.half-open,
+    .letter.fully-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .letter.half-open {
+      transform: translate(-50%, -80px);
+    }
+
+    .letter.fully-open {
+      transform: translate(-50%, -250px);
+    }
+
+    .letter h1 {
+      color: #d63384;
+      font-size: 1.8em;
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .envelope {
+      position: absolute;
+      width: 100%;
+      max-width: 400px;
+      height: 260px;
+      background: #f5e6ca;
+      border: 2px solid #c2b280;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+      bottom: 0;
+      cursor: default;
+      z-index: 2;
+      transition: filter 0.3s;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-left: 200px solid transparent;
+      border-right: 200px solid transparent;
+      border-top: 130px solid #e2d1a5; /* triângulo para baixo */
+      transform-origin: top center;
+      transition: transform 2.5s ease; /* MAIS LENTO */
+      z-index: 5;
+      transform: translateX(-50%);
+    }
+
+    .envelope.open .flap {
+      transform: translateX(-50%) rotateX(180deg);
+    }
+
+    button {
+      padding: 14px 32px;
+      font-size: 1.3em;
+      background-color: #d63384;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      user-select: none;
+      max-width: 400px;
+      width: 90vw;
+      box-sizing: border-box;
+    }
+
+    button:hover {
+      background-color: #c2185b;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="envelope-container">
+    <div class="envelope" id="envelope">
+      <div class="body"></div>
+      <div class="flap"></div>
+    </div>
+    <div id="letter" class="letter">
+      <h1>Feliz Aniversário, Mãezinha!</h1>
+      <p> Espero que goste, tentei fazer algo especial com o que aprendi no curso, já que você merece sempre o melhor que eu posso oferecer, eu te amo para sempre mãe!🎂🎈❤️</p>
+    </div>
+  </div>
+
+  <button id="toggleButton">Abrir Carta</button>
+
+  <script>
+    const envelope = document.getElementById('envelope');
+    const letter = document.getElementById('letter');
+    const btn = document.getElementById('toggleButton');
+
+    let state = 'closed';
+
+    btn.addEventListener('click', () => {
+      if (state === 'closed') {
+        envelope.classList.add('open');
+        letter.classList.remove('fully-open');
+        letter.classList.add('half-open');
+        state = 'partial';
+        btn.textContent = 'Puxar Mais a Carta';
+      } else if (state === 'partial') {
+        letter.classList.remove('half-open');
+        letter.classList.add('fully-open');
+        state = 'full';
+        btn.textContent = 'Fechar Carta';
+      } else {
+        envelope.classList.remove('open');
+        letter.classList.remove('half-open', 'fully-open');
+        state = 'closed';
+        btn.textContent = 'Abrir Carta';
+      }
+    });
+  </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
